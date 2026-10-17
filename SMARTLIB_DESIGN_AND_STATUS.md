@@ -148,6 +148,8 @@ Not locally verified:
 - Browser screenshots and real GSAP runtime inspection because no browser run was performed in this slice.
 - Vercel deployment itself because it requires the user's Vercel account and network access.
 
+The Render startup YAML failure was traced to an extra indentation before `spring.datasource.url` in `application.yml`. The URL is now correctly aligned and quoted, and `YamlConfigurationTest` parses both application configuration files to prevent this regression.
+
 The backend is prepared for platforms that inject a `PORT` environment variable, including Render. The recommended public deployment is a Render Docker web service plus managed PostgreSQL, with Vercel used for the static preview.
 The repository also contains `render.yaml` so Render can create the Docker service configuration without copying the health-check and environment-variable names by hand.
 The Dockerfile now builds with `maven:3.9.11-eclipse-temurin-21`, removes the duplicate `dependency:go-offline` download, limits resolver concurrency, and retries Maven Central access with backoff for Render's shared-build HTTP 429 responses.

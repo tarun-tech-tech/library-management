@@ -194,4 +194,4 @@ The last verified commands from the repository root are:
 .\mvnw.cmd -B -ntp package  PASS: executable Spring Boot JAR created
 ```
 
-Docker/PostgreSQL startup and browser screenshots are not claimed as locally verified when those tools/services are unavailable. See `SMARTLIB_DESIGN_AND_STATUS.md` for the detailed handoff and the next implementation slice.
+Docker/PostgreSQL startup and browser screenshots are not claimed as locally verified when those tools/services are unavailable. The YAML configuration files are now covered by an automated parser test. See `SMARTLIB_DESIGN_AND_STATUS.md` for the detailed handoff and the next implementation slice.
