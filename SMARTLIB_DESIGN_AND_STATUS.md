@@ -148,6 +148,8 @@ Not locally verified:
 - Browser screenshots and real GSAP runtime inspection because no browser run was performed in this slice.
 - Vercel deployment itself because it requires the user's Vercel account and network access.
 
+The backend is prepared for platforms that inject a `PORT` environment variable, including Render. The recommended public deployment is a Render Docker web service plus managed PostgreSQL, with Vercel used for the static preview.
+
 ## Remaining work
 
 The next engineering slices should be implemented and checked in this order:

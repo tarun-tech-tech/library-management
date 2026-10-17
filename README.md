@@ -120,6 +120,58 @@ npx vercel@41.4.0 --prod
 
 The preview deliberately labels its figures as illustrative. It demonstrates the information architecture, responsive behavior, image direction, accordion/carousel interactions, and visual system; it does not pretend to perform real circulation mutations. The functional Java backend is deployed separately to a Java container platform. Do not place private API credentials or database URLs in the Vercel static project.
 
+## Recommended deployment path
+
+Deploy the two parts separately:
+
+### 1. Deploy the functional backend on Render
+
+Render is the simplest first Java-container deployment for this repository.
+
+1. Create a **PostgreSQL** database in Render.
+2. Create a **Web Service** from `tarun-tech-tech/library-management`.
+3. Select the `main` branch and choose **Docker**. Render will use the repository `Dockerfile`.
+4. Add these environment variables in the web service:
+
+```text
+SPRING_PROFILES_ACTIVE=prod
+DB_URL=jdbc:postgresql://<internal-db-host>:5432/<database-name>?sslmode=require
+DB_USERNAME=<database-user>
+DB_PASSWORD=<database-password>
+SESSION_COOKIE_SECURE=true
+SMARTLIB_BOOTSTRAP_ADMIN_USERNAME=<one-time-admin-username>
+SMARTLIB_BOOTSTRAP_ADMIN_PASSWORD=<one-time-random-password-at-least-16-characters>
+SMARTLIB_BOOTSTRAP_ADMIN_EMAIL=<admin-email>
+SMARTLIB_BOOTSTRAP_ADMIN_FULL_NAME=<admin-name>
+```
+
+Use the internal hostname and credentials shown by the managed PostgreSQL service. Do not paste these values into GitHub. The application accepts Render's injected `PORT` automatically and exposes `/actuator/health` for the health check.
+
+5. Deploy the service and wait for `/actuator/health` to report `UP`.
+6. Open `/login` on the generated Render URL and sign in with the one-time bootstrap values.
+7. After the first successful login, remove the four `SMARTLIB_BOOTSTRAP_ADMIN_*` variables and redeploy. The created account remains in PostgreSQL.
+8. Test catalog search, issue, return, renewal, fine payment, and `/swagger-ui.html`.
+
+### 2. Deploy the visual preview on Vercel
+
+1. In Vercel, choose **Add New → Project** and import `tarun-tech-tech/library-management`.
+2. Keep the repository root as the project root.
+3. Framework preset: **Other**.
+4. Build command: leave empty.
+5. Output directory: `public`.
+6. Deploy.
+
+The Vercel URL is the static design preview. It is intentionally separate from the functional Render backend because Vercel does not run the Java/Spring Boot container in this repository. If you later want the Vercel UI to call the backend, add a configurable API origin, CORS policy, and a production session strategy before connecting the two origins.
+
+### 3. First production checklist
+
+- Confirm the Render URL serves `/actuator/health` with `UP`.
+- Confirm PostgreSQL migrations V1, V2, and V3 ran in the deployment logs.
+- Sign in, then remove bootstrap variables.
+- Set a custom domain and HTTPS before enabling real users.
+- Configure backups for managed PostgreSQL and test a restore.
+- Keep the Vercel preview and backend URLs documented for the team.
+
 ## Security and deployment notes
 
 - Never commit `.env`, bootstrap credentials, API keys, SMTP passwords, or database dumps.
