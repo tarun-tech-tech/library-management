@@ -13,11 +13,7 @@ services:
         value: prod
       - key: SESSION_COOKIE_SECURE
         value: "true"
-      - key: DB_URL
-        sync: false
-      - key: DB_USERNAME
-        sync: false
-      - key: DB_PASSWORD
+      - key: DATABASE_URL
         sync: false
       - key: SMARTLIB_BOOTSTRAP_ADMIN_USERNAME
         sync: false

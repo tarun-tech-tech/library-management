@@ -2,7 +2,7 @@ spring:
   application:
     name: smartlib
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/smartlib}
+     url: ${SMARTLIB_JDBC_DATABASE_URL:${DB_URL:jdbc:postgresql://localhost:5432/smartlib}}
     username: ${DB_USERNAME:smartlib}
     password: ${DB_PASSWORD:}
     hikari:

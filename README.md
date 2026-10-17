@@ -131,13 +131,11 @@ Render is the simplest first Java-container deployment for this repository.
 1. Create a **PostgreSQL** database in Render.
 2. Create a **Blueprint** from `tarun-tech-tech/library-management`. Render will detect `render.yaml` and create the Docker web service configuration.
 3. Select the `main` branch. The blueprint uses the repository `Dockerfile` and `/actuator/health` as its health check.
-4. Add the managed database connection and bootstrap values requested by the blueprint:
+4. Add the managed database connection and bootstrap values requested by the blueprint. For the database, use Render's **Internal Database URL** directly in `DATABASE_URL` (it normally starts with `postgresql://`). The application converts that Render URL to JDBC and extracts its username/password. Do not type `DATABASE_HOST`, `<internal-db-host>`, or any other placeholder literally:
 
 ```text
 SPRING_PROFILES_ACTIVE=prod
-DB_URL=jdbc:postgresql://<internal-db-host>:5432/<database-name>?sslmode=require
-DB_USERNAME=<database-user>
-DB_PASSWORD=<database-password>
+DATABASE_URL=<paste-the-real-Internal-Database-URL-from-Render>
 SESSION_COOKIE_SECURE=true
 SMARTLIB_BOOTSTRAP_ADMIN_USERNAME=<one-time-admin-username>
 SMARTLIB_BOOTSTRAP_ADMIN_PASSWORD=<one-time-random-password-at-least-16-characters>
@@ -145,7 +143,7 @@ SMARTLIB_BOOTSTRAP_ADMIN_EMAIL=<admin-email>
 SMARTLIB_BOOTSTRAP_ADMIN_FULL_NAME=<admin-name>
 ```
 
-Use the internal hostname and credentials shown by the managed PostgreSQL service. Do not paste these values into GitHub. The application accepts Render's injected `PORT` automatically and exposes `/actuator/health` for the health check.
+Paste the complete real Internal Database URL from Render into `DATABASE_URL`; do not paste these values into GitHub. If you prefer separate values, you may instead set `DB_URL` to a real `jdbc:postgresql://...` URL and set `DB_USERNAME` and `DB_PASSWORD` separately. The application accepts Render's injected `PORT` automatically and exposes `/actuator/health` for the health check.
 
 5. Deploy the service and wait for `/actuator/health` to report `UP`.
 6. Open `/login` on the generated Render URL and sign in with the one-time bootstrap values.
