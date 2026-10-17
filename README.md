@@ -150,6 +150,8 @@ Paste the complete real Internal Database URL from Render into `DATABASE_URL`; d
 7. After the first successful login, remove the four `SMARTLIB_BOOTSTRAP_ADMIN_*` variables and redeploy. The created account remains in PostgreSQL.
 8. Test catalog search, issue, return, renewal, fine payment, and `/swagger-ui.html`.
 
+The Render blueprint enables the separate `classpath:db/demo` Flyway location. On the next deployment, migration `V100__academic_demo_data.sql` adds a small, idempotent presentation dataset: three books, six physical copies, three members, one active loan, one returned overdue loan, and one unpaid fine. The records use reserved `smartlib.example` emails and `SMARTLIB-DEMO-*` inventory codes; they do not create or change login accounts.
+
 The Docker build uses the official Maven image, an HTTPS Maven Central public mirror, and a single retrying dependency-resolution pass. This avoids downloading Maven through the wrapper during a Render build and backs off when a public Maven endpoint temporarily returns HTTP 429.
 
 The Render blueprint also applies a low-memory JVM profile for the 512 MiB free service: capped heap/metaspace/direct memory, SerialGC, a smaller thread stack, and a three-connection Hikari pool. If the service is upgraded to a larger plan, these limits can be relaxed.

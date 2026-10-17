@@ -154,6 +154,7 @@ The backend is prepared for platforms that inject a `PORT` environment variable,
 The repository also contains `render.yaml` so Render can create the Docker service configuration without copying the health-check and environment-variable names by hand.
 The Dockerfile now builds with `maven:3.9.11-eclipse-temurin-21`, uses an HTTPS Maven Central public mirror, removes the duplicate `dependency:go-offline` download, limits resolver concurrency, and retries Maven access with backoff for Render's shared-build HTTP 429 responses.
 The Render blueprint now sets a constrained JVM and Hikari profile for the 512 MiB free tier so the Spring/JPA/Thymeleaf process can finish startup without exceeding the service memory limit.
+Render also enables the separate `classpath:db/demo` Flyway location. Migration `V100__academic_demo_data.sql` supplies idempotent academic presentation data without changing the default local migration path or bootstrap login account.
 
 ## Remaining work
 

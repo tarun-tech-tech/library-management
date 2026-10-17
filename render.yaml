@@ -13,6 +13,8 @@ services:
         value: prod
       - key: SESSION_COOKIE_SECURE
         value: "true"
+      - key: SPRING_FLYWAY_LOCATIONS
+        value: "classpath:db/migration,classpath:db/demo"
       - key: JAVA_TOOL_OPTIONS
         value: "-XX:MaxRAMPercentage=25.0 -XX:InitialRAMPercentage=3.0 -XX:MaxMetaspaceSize=160m -XX:ReservedCodeCacheSize=24m -XX:MaxDirectMemorySize=32m -XX:ActiveProcessorCount=2 -Xss256k -XX:+UseSerialGC"
       - key: DB_POOL_SIZE
