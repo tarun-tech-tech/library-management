@@ -1,16 +1,21 @@
-FROM eclipse-temurin:21.0.8_9-jdk-jammy AS build
+FROM maven:3.9.11-eclipse-temurin-21 AS build
 
 WORKDIR /workspace
-RUN apt-get update \
-    && apt-get install --no-install-recommends --yes ca-certificates curl unzip \
-    && rm -rf /var/lib/apt/lists/*
-
-COPY pom.xml mvnw ./
-COPY .mvn ./.mvn
-RUN chmod +x mvnw
-RUN ./mvnw -B -ntp -DskipTests dependency:go-offline
+COPY pom.xml ./
 COPY src ./src
-RUN ./mvnw -B -ntp -DskipTests package
+
+# Render's shared build IP can receive temporary 429 responses from Maven Central.
+# Use one dependency-resolution pass, keep resolver concurrency low, and retry with
+# backoff instead of downloading Maven through the project wrapper first.
+RUN set -eux; \
+    for attempt in 1 2 3 4 5; do \
+      mvn -B -ntp \
+        -Daether.connector.basic.threads=1 \
+        -Dmaven.wagon.http.retryHandler.count=5 \
+        -DskipTests package && exit 0; \
+      if [ "$attempt" -lt 5 ]; then sleep $((attempt * 30)); fi; \
+    done; \
+    exit 1
 
 FROM eclipse-temurin:21.0.8_9-jre-jammy
 

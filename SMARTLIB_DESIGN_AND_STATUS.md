@@ -139,7 +139,7 @@ PASS: 4 tests, 0 failures, 0 errors
 PASS: executable JAR created at target/smartlib-backend-0.1.0-SNAPSHOT.jar
 ```
 
-The successful tests cover fine calculation for on-time and overdue cases plus partial-payment, full-payment, and overpayment boundaries. The Java compiler also validated the new web controller, dashboard service, repositories, payment model, and application dependencies.
+The successful tests cover Render connection-string normalization, fine calculation for on-time and overdue cases, plus partial-payment, full-payment, and overpayment boundaries. The Java compiler also validated the new web controller, dashboard service, repositories, payment model, and application dependencies.
 
 Not locally verified:
 
@@ -150,6 +150,7 @@ Not locally verified:
 
 The backend is prepared for platforms that inject a `PORT` environment variable, including Render. The recommended public deployment is a Render Docker web service plus managed PostgreSQL, with Vercel used for the static preview.
 The repository also contains `render.yaml` so Render can create the Docker service configuration without copying the health-check and environment-variable names by hand.
+The Dockerfile now builds with `maven:3.9.11-eclipse-temurin-21`, removes the duplicate `dependency:go-offline` download, limits resolver concurrency, and retries Maven Central access with backoff for Render's shared-build HTTP 429 responses.
 
 ## Remaining work
 

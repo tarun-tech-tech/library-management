@@ -150,6 +150,8 @@ Paste the complete real Internal Database URL from Render into `DATABASE_URL`; d
 7. After the first successful login, remove the four `SMARTLIB_BOOTSTRAP_ADMIN_*` variables and redeploy. The created account remains in PostgreSQL.
 8. Test catalog search, issue, return, renewal, fine payment, and `/swagger-ui.html`.
 
+The Docker build uses the official Maven image and a single retrying dependency-resolution pass. This avoids downloading Maven through the wrapper during a Render build and backs off when Maven Central temporarily returns HTTP 429.
+
 ### 2. Deploy the visual preview on Vercel
 
 1. In Vercel, choose **Add New → Project** and import `tarun-tech-tech/library-management`.
@@ -188,7 +190,7 @@ The original Ant application is preserved under `src/java`, `web`, `database`, `
 The last verified commands from the repository root are:
 
 ```text
-.\mvnw.cmd -B -ntp test     PASS: 4 tests
+.\mvnw.cmd -B -ntp test     PASS: 6 tests
 .\mvnw.cmd -B -ntp package  PASS: executable Spring Boot JAR created
 ```
 
