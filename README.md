@@ -129,9 +129,9 @@ Deploy the two parts separately:
 Render is the simplest first Java-container deployment for this repository.
 
 1. Create a **PostgreSQL** database in Render.
-2. Create a **Web Service** from `tarun-tech-tech/library-management`.
-3. Select the `main` branch and choose **Docker**. Render will use the repository `Dockerfile`.
-4. Add these environment variables in the web service:
+2. Create a **Blueprint** from `tarun-tech-tech/library-management`. Render will detect `render.yaml` and create the Docker web service configuration.
+3. Select the `main` branch. The blueprint uses the repository `Dockerfile` and `/actuator/health` as its health check.
+4. Add the managed database connection and bootstrap values requested by the blueprint:
 
 ```text
 SPRING_PROFILES_ACTIVE=prod

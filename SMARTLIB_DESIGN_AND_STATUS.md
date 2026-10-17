@@ -149,6 +149,7 @@ Not locally verified:
 - Vercel deployment itself because it requires the user's Vercel account and network access.
 
 The backend is prepared for platforms that inject a `PORT` environment variable, including Render. The recommended public deployment is a Render Docker web service plus managed PostgreSQL, with Vercel used for the static preview.
+The repository also contains `render.yaml` so Render can create the Docker service configuration without copying the health-check and environment-variable names by hand.
 
 ## Remaining work
 

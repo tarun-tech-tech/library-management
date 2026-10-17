@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: smartlib-api
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /actuator/health
+    autoDeploy: true
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: SESSION_COOKIE_SECURE
+        value: "true"
+      - key: DB_URL
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: SMARTLIB_BOOTSTRAP_ADMIN_USERNAME
+        sync: false
+      - key: SMARTLIB_BOOTSTRAP_ADMIN_PASSWORD
+        sync: false
+      - key: SMARTLIB_BOOTSTRAP_ADMIN_EMAIL
+        sync: false
+      - key: SMARTLIB_BOOTSTRAP_ADMIN_FULL_NAME
+        sync: false
