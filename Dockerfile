@@ -2,6 +2,7 @@ FROM maven:3.9.11-eclipse-temurin-21 AS build
 
 WORKDIR /workspace
 COPY pom.xml ./
+COPY .mvn/render-settings.xml /root/render-settings.xml
 COPY src ./src
 
 # Render's shared build IP can receive temporary 429 responses from Maven Central.
@@ -9,7 +10,7 @@ COPY src ./src
 # backoff instead of downloading Maven through the project wrapper first.
 RUN set -eux; \
     for attempt in 1 2 3 4 5; do \
-      mvn -B -ntp \
+      mvn -s /root/render-settings.xml -B -ntp \
         -Daether.connector.basic.threads=1 \
         -Dmaven.wagon.http.retryHandler.count=5 \
         -DskipTests package && exit 0; \
