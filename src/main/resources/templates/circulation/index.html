@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(${pageTitle})}"></head>
+<body class="app-body">
+<div class="app-shell">
+    <div th:replace="~{fragments/sidebar :: sidebar('circulation')}"></div>
+    <div class="app-content">
+        <div th:replace="~{fragments/topbar :: topbar(null)}"></div>
+        <main class="app-main overflow-x-hidden">
+            <section class="page-intro circulation-intro reveal-section">
+                <div><div class="eyebrow">A clear desk is a generous desk</div><h1 class="page-title max-w-6xl">Keep every handoff visible.</h1><p class="page-lead">Issue, return, and renew from one focused queue. Rules, dates, and fines are resolved by the backend.</p></div>
+                <div class="circulation-actions"><a class="button button-primary" href="#issue-panel">Issue a book <span aria-hidden="true">→</span></a><a class="button button-ghost-dark" th:href="@{/catalog}">Find a title <span aria-hidden="true">↗</span></a></div>
+            </section>
+            <section class="circulation-layout reveal-section">
+                <div class="loan-queue"><div class="section-heading-row compact-heading"><div><div class="eyebrow">Live queue</div><h2>Loans in motion</h2></div><span class="quiet-note" th:text="${#lists.size(loans) + ' records'}">0 records</span></div><div class="table-shell loan-shell"><div class="table-row table-head"><span>Book / copy</span><span>Member</span><span>Due</span><span>State</span><span></span></div><div class="table-row loan-row" th:each="loan : ${loans}"><span class="book-cell"><span class="table-cover cover-blue" aria-hidden="true"></span><span><strong th:text="${loan.bookTitle}">Book</strong><small th:text="${loan.inventoryCode}">Copy</small></span></span><span th:text="${loan.memberName}">Member</span><span th:text="${loan.dueDate}">Due</span><span><span class="status" th:classappend="${loan.overdueDays > 0 ? ' status-alert' : (loan.status.name() == 'ISSUED' ? ' status-live' : ' status-muted')}" th:text="${loan.overdueDays > 0 ? loan.overdueDays + ' days late' : loan.status}">ISSUED</span></span><span class="row-actions"><button class="table-action" type="button" th:if="${loan.status.name() == 'ISSUED'}" th:attr="data-loan-return=${loan.id}">Return</button><button class="table-action quiet-action" type="button" th:if="${loan.status.name() == 'ISSUED' and loan.overdueDays == 0}" th:attr="data-loan-renew=${loan.id}">Renew</button></span></div><div class="empty-state" th:if="${#lists.isEmpty(loans)}">Nothing is out right now. The queue is clear.</div></div></div>
+                <aside class="issue-panel" id="issue-panel"><div class="eyebrow">Desk action</div><h2>Issue a book.</h2><p>Enter a member ID and a physical copy ID. The server will verify membership, availability, limits, and the due date.</p><form id="issue-form" class="desk-form"><label for="memberId">Member ID</label><input id="memberId" name="memberId" type="number" min="1" required placeholder="e.g. 12"><label for="bookCopyId">Copy ID</label><input id="bookCopyId" name="bookCopyId" type="number" min="1" required placeholder="e.g. 48"><label for="durationDays">Loan length <span>optional</span></label><input id="durationDays" name="durationDays" type="number" min="1" max="60" placeholder="Use library default"><button class="button button-dark button-wide" type="submit">Confirm issue <span aria-hidden="true">→</span></button><p class="form-message" id="issue-message" role="alert"></p></form><div class="desk-note"><span class="lock-mark" aria-hidden="true"></span><span>Concurrent issue attempts are locked at copy level.</span></div></aside>
+            </section>
+        </main>
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </div>
+</div>
+<div class="toast" role="status" aria-live="polite"></div>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script th:src="@{/js/smartlib.js}"></script>
+</body>
+</html>

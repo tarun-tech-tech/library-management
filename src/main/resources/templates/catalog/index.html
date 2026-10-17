@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(${pageTitle})}"></head>
+<body class="app-body">
+<div class="app-shell">
+    <div th:replace="~{fragments/sidebar :: sidebar('catalog')}"></div>
+    <div class="app-content">
+        <div th:replace="~{fragments/topbar :: topbar(null)}"></div>
+        <main class="app-main overflow-x-hidden">
+            <section class="page-intro reveal-section">
+                <div class="eyebrow">A collection with a point of view</div>
+                <h1 class="page-title max-w-6xl">Find the book that opens the next door.</h1>
+                <p class="page-lead">Search by title, author, or category. Availability comes directly from copy-level inventory.</p>
+                <form class="catalog-search" method="get" th:action="@{/catalog}">
+                    <span class="search-mark" aria-hidden="true"></span>
+                    <input type="search" name="q" th:value="${query}" placeholder="Try “algorithms”, “Martin Fowler”, or “programming”" aria-label="Search catalog">
+                    <button class="button button-primary" type="submit">Search catalog <span aria-hidden="true">→</span></button>
+                </form>
+            </section>
+
+            <section class="catalog-section reveal-section" aria-labelledby="catalog-heading">
+                <div class="section-heading-row compact-heading">
+                    <div><div class="eyebrow">Current collection</div><h2 id="catalog-heading" th:text="${#lists.size(books) + ' titles in view'}">Titles in view</h2></div>
+                    <span class="quiet-note" th:if="${query != null and !#strings.isEmpty(query)}">Filtered by “<strong th:text="${query}">query</strong>”</span>
+                </div>
+                <div class="catalog-grid" th:if="${!#lists.isEmpty(books)}">
+                    <a class="catalog-card card-hover" th:each="book, stat : ${books}" th:href="@{/catalog/{id}(id=${book.id})}">
+                        <div class="catalog-card-art" th:classappend="${'art-' + (stat.index % 5)}">
+                            <span class="catalog-card-index" th:text="${'0' + (stat.index + 1)}">01</span>
+                            <span class="catalog-card-spine" th:text="${book.category}">Category</span>
+                        </div>
+                        <div class="catalog-card-copy">
+                            <div><h3 th:text="${book.title}">Book title</h3><p th:text="${book.author}">Author</p></div>
+                            <span class="availability" th:classappend="${book.availableCopies > 0 ? ' is-available' : ' is-empty'}"><span></span><span th:text="${book.availableCopies + ' of ' + book.totalCopies + ' available'}">Available</span></span>
+                        </div>
+                    </a>
+                </div>
+                <div class="empty-panel" th:if="${#lists.isEmpty(books)}">
+                    <div class="empty-orbit" aria-hidden="true"></div>
+                    <h3>No titles match that search.</h3>
+                    <p>Try a broader title, author, or category. The catalog is happiest when it has room to surprise you.</p>
+                    <a class="button button-dark" th:href="@{/catalog}">Show the full catalog <span aria-hidden="true">→</span></a>
+                </div>
+            </section>
+
+            <section class="accordion-section reveal-section" aria-labelledby="catalog-note-heading">
+                <div class="accordion-copy"><div class="eyebrow">How discovery works</div><h2 id="catalog-note-heading">Less hunting. More finding.</h2><p>Search is only the first layer. SmartLib keeps availability, copy identity, and member signals close enough to be useful without making the desk feel busy.</p></div>
+                <div class="horizontal-accordion" data-accordion>
+                    <button class="accordion-item is-open" type="button"><span>01</span><strong>Search the record</strong><i>+</i><div class="accordion-detail">A single search reaches title, author, and category fields.</div></button>
+                    <button class="accordion-item" type="button"><span>02</span><strong>See the copy</strong><i>+</i><div class="accordion-detail">Every physical copy has a unique inventory code and a real status.</div></button>
+                    <button class="accordion-item" type="button"><span>03</span><strong>Move it forward</strong><i>+</i><div class="accordion-detail">Issue, renew, and return actions are enforced transactionally.</div></button>
+                </div>
+            </section>
+        </main>
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </div>
+</div>
+<div class="toast" role="status" aria-live="polite"></div>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script th:src="@{/js/smartlib.js}"></script>
+</body>
+</html>

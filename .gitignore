@@ -1,0 +1,32 @@
+# Maven output and downloaded wrapper distribution
+target/
+.mvn/wrapper/apache-maven-*/
+.mvn/wrapper/*.zip
+.mvn/wrapper/.extract-*/
+
+# Legacy/IDE build output
+build/
+dist/
+nbproject/private/
+*.log
+
+# Local deployment state and workspace tooling
+.vercel/
+.taste-skill/
+.agents/
+
+# Environment files: keep only the redacted example
+.env.*
+!.env.example
+
+# Local reports and generated archives
+reports/
+*.war
+
+# Local configuration and IDE files
+.env
+.idea/
+*.iml
+.classpath
+.project
+.settings/

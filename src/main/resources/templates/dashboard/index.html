@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(${pageTitle})}"></head>
+<body class="app-body">
+<div class="app-shell">
+    <div th:replace="~{fragments/sidebar :: sidebar('dashboard')}"></div>
+    <div class="app-content">
+        <div th:replace="~{fragments/topbar :: topbar(${currentUser})}"></div>
+        <main class="app-main overflow-x-hidden">
+            <section class="hero hero-artistic reveal-section">
+                <div class="hero-copy">
+                    <div class="eyebrow">A calmer way to run a library</div>
+                    <h1 class="hero-title max-w-6xl">Keep the shelves moving, <em>keep the mind open.</em></h1>
+                    <p class="hero-lead">SmartLib connects your catalog, circulation desk, and member signals in one quiet operational layer.</p>
+                    <div class="hero-actions">
+                        <a class="button button-primary" th:href="@{/catalog}">Browse catalog <span aria-hidden="true">→</span></a>
+                        <a class="button button-ghost" th:href="@{/circulation}">Open circulation <span aria-hidden="true">↗</span></a>
+                    </div>
+                </div>
+                <div class="hero-visual image-reveal">
+                    <img src="https://picsum.photos/seed/library-architecture/1400/1100" alt="Quiet reading room with shelves and long light" loading="eager">
+                    <div class="hero-visual-scrim"></div>
+                    <div class="hero-visual-caption"><span>Reading room / west wing</span><span>Live</span></div>
+                </div>
+            </section>
+
+            <section class="chapter-block reveal-section" aria-labelledby="overview-heading">
+                <div class="section-heading-row">
+                    <div>
+                        <div class="eyebrow">Your library at a glance</div>
+                        <h2 id="overview-heading">The signal is in the flow.</h2>
+                    </div>
+                    <p>Real-time operational figures from your catalog and circulation records.</p>
+                </div>
+                <div class="bento-grid grid-flow-dense">
+                    <article class="bento-card bento-primary card-hover span-2x2">
+                        <div class="bento-topline"><span class="card-kicker">Titles in collection</span><span class="mini-arrow">↗</span></div>
+                        <strong class="metric metric-large" th:text="${snapshot.totalTitles}">0</strong>
+                        <p>Bibliographic records ready for the next search.</p>
+                        <div class="card-image-strip image-reveal"><img src="https://picsum.photos/seed/library-shelf/1200/600" alt="Shelves of books in a dark library" loading="lazy"></div>
+                    </article>
+                    <article class="bento-card bento-lime card-hover span-1x1">
+                        <span class="card-kicker">Available copies</span>
+                        <strong class="metric" th:text="${snapshot.availableCopies}">0</strong>
+                        <span class="metric-trend">Ready to lend</span>
+                    </article>
+                    <article class="bento-card bento-ink card-hover span-1x1">
+                        <span class="card-kicker">Active members</span>
+                        <strong class="metric" th:text="${snapshot.activeMembers}">0</strong>
+                        <span class="metric-trend">Accounts in good standing</span>
+                    </article>
+                    <article class="bento-card bento-image card-hover span-1x1 image-reveal">
+                        <img src="https://picsum.photos/seed/library-table/900/700" alt="Open book and notes on a library table" loading="lazy">
+                        <div class="bento-image-overlay"><span>Open minds</span><span>→</span></div>
+                    </article>
+                    <article class="bento-card bento-paper card-hover span-1x1">
+                        <span class="card-kicker">Active loans</span>
+                        <strong class="metric" th:text="${snapshot.activeLoans}">0</strong>
+                        <span class="metric-trend">Currently in circulation</span>
+                    </article>
+                    <article class="bento-card bento-wide card-hover span-2x1">
+                        <div><span class="card-kicker">Outstanding fines</span><strong class="metric" th:text="${'৳ ' + snapshot.outstandingFines}">৳ 0.00</strong></div>
+                        <div class="fine-orbit" aria-hidden="true"><span></span><span></span><span></span></div>
+                        <span class="metric-trend">Keep the desk transparent</span>
+                    </article>
+                    <article class="bento-card bento-red card-hover span-2x1">
+                        <div><span class="card-kicker">Needs attention</span><strong class="metric" th:text="${snapshot.overdueLoans}">0</strong></div>
+                        <p>Overdue loans waiting for a thoughtful follow-up.</p>
+                        <a th:href="@{/circulation}" class="text-link">Review the queue <span aria-hidden="true">→</span></a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="pinned-story reveal-section" aria-labelledby="story-heading">
+                <div class="pin-title">
+                    <div class="eyebrow">A living collection</div>
+                    <h2 id="story-heading">Every return changes what comes next.</h2>
+                    <p>Circulation is not a report at the end of the day. It is the pulse that helps a collection become more useful.</p>
+                    <a class="text-link" th:href="@{/circulation}">See circulation <span aria-hidden="true">→</span></a>
+                </div>
+                <div class="story-rail">
+                    <article class="story-card story-card-dark story-card-image image-reveal">
+                        <img src="https://picsum.photos/seed/library-stacks/1200/1500" alt="Tall library shelves with a person walking between them" loading="lazy">
+                        <div class="story-card-overlay"><span>Borrowed</span><strong>Knowledge travels further when it moves.</strong></div>
+                    </article>
+                    <article class="story-card story-card-lime">
+                        <div class="story-glyph glyph-arrows" aria-hidden="true"></div>
+                        <strong>Issue, return, renew.</strong>
+                        <p>One clear sequence for every desk interaction, with the rules enforced where they matter: on the server.</p>
+                    </article>
+                    <article class="story-card story-card-paper" data-feedback>
+                        <div class="story-quote-mark">“</div>
+                        <div data-feedback-slide><blockquote>Our best recommendation is still the book a student did not know to ask for.</blockquote><cite>— The SmartLib recommendation layer</cite></div>
+                        <div data-feedback-slide hidden><blockquote>A returned book is a new invitation, not a closed record.</blockquote><cite>— The SmartLib circulation desk</cite></div>
+                        <div data-feedback-slide hidden><blockquote>Good inventory makes more room for good questions.</blockquote><cite>— The SmartLib catalog layer</cite></div>
+                        <div class="feedback-controls"><span data-feedback-counter>01 / 03</span><div><button type="button" data-feedback-previous aria-label="Previous note">←</button><button type="button" data-feedback-next aria-label="Next note">→</button></div></div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="marquee-band reveal-section" aria-label="SmartLib principles">
+                <div class="marquee-track">
+                    <span>Catalog clarity</span><i></i><span>Secure circulation</span><i></i><span>Useful signals</span><i></i><span>Catalog clarity</span><i></i><span>Secure circulation</span><i></i><span>Useful signals</span><i></i>
+                </div>
+            </section>
+
+            <section class="recent-section reveal-section" aria-labelledby="recent-heading">
+                <div class="section-heading-row compact-heading">
+                    <div><div class="eyebrow">The latest movement</div><h2 id="recent-heading">Recent circulation</h2></div>
+                    <a class="text-link" th:href="@{/circulation}">Open full history <span aria-hidden="true">↗</span></a>
+                </div>
+                <div class="table-shell">
+                    <div class="table-row table-head"><span>Book</span><span>Member</span><span>Due</span><span>Status</span></div>
+                    <div class="table-row" th:each="loan : ${snapshot.loans}">
+                        <span class="book-cell"><span class="table-cover" aria-hidden="true"></span><strong th:text="${loan.bookTitle}">Book title</strong></span>
+                        <span th:text="${loan.memberName}">Member</span>
+                        <span th:text="${loan.dueDate}">2026-01-01</span>
+                        <span><span class="status" th:classappend="${loan.status.name() == 'ISSUED' ? ' status-live' : ' status-muted'}" th:text="${loan.status}">ISSUED</span></span>
+                    </div>
+                    <div class="empty-state" th:if="${#lists.isEmpty(snapshot.loans)}">No circulation activity yet. The first issue will appear here.</div>
+                </div>
+            </section>
+        </main>
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </div>
+</div>
+<div class="toast" role="status" aria-live="polite"></div>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script th:src="@{/js/smartlib.js}"></script>
+</body>
+</html>

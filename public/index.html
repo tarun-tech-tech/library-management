@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SmartLib · Library intelligence workspace</title>
+    <meta name="description" content="A static SmartLib preview for Vercel. Connect the Spring Boot API for live data.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/preview.css">
+</head>
+<body>
+<div class="shell">
+    <aside class="sidebar">
+        <a class="brand" href="/"><span class="brand-mark"><i></i><i></i><i></i></span><strong>SmartLib</strong></a>
+        <div class="rule"></div>
+        <nav><a class="active" href="#overview"><b>01</b> Overview</a><a href="#catalog"><b>02</b> Catalog</a><a href="#circulation"><b>03</b> Circulation</a><a href="#catalog"><b>AI</b> Reading signals</a></nav>
+        <div class="side-fill"></div>
+        <div class="network"><span></span><div><strong>Library network</strong><small>Operational and synced</small></div></div>
+        <small class="side-foot">SmartLib workspace<br><em>Built for useful reading</em></small>
+    </aside>
+    <div class="content">
+        <header class="topbar"><div class="crumbs">Workspace <i>/</i> <strong>Overview</strong></div><div class="actions"><a href="#catalog">Search the catalog <kbd>/</kbd></a><button type="button" data-toast="Notifications are clear">Bell</button><span class="avatar">S</span></div></header>
+        <main>
+            <section class="hero" id="overview"><div class="hero-copy"><small>A calmer way to run a library</small><h1>Keep the shelves moving, <em>keep the mind open.</em></h1><p>SmartLib connects your catalog, circulation desk, and member signals in one quiet operational layer.</p><div class="hero-buttons"><a class="button primary" href="#catalog">Browse catalog <span>→</span></a><a class="button outline" href="#circulation">Open circulation <span>↗</span></a></div></div><div class="hero-image"><img src="https://picsum.photos/seed/library-architecture/1400/1100" alt="Quiet reading room with shelves and long light"><div><span>Reading room / west wing</span><span>Live preview</span></div></div></section>
+            <section class="chapter"><div class="section-head"><div><small>Your library at a glance</small><h2>The signal is in the flow.</h2></div><p>Preview figures are illustrative. The Spring Boot application replaces them with PostgreSQL-backed values.</p></div><div class="bento"><article class="large dark"><small>Titles in collection</small><strong>10</strong><p>Bibliographic records ready for the next search.</p><img src="https://picsum.photos/seed/library-shelf/1200/600" alt="Shelves of books"></article><article class="lime"><small>Available copies</small><strong>31</strong><span>Ready to lend</span></article><article class="deep"><small>Active members</small><strong>5</strong><span>Accounts in good standing</span></article><article class="image-card"><img src="https://picsum.photos/seed/library-table/900/700" alt="Open book and notes"><div><span>Open minds</span><span>→</span></div></article><article class="paper"><small>Active loans</small><strong>5</strong><span>Currently in circulation</span></article><article class="wide blue"><div><small>Outstanding fines</small><strong>৳ 30.00</strong></div><div class="orbit"></div><span>Keep the desk transparent</span></article><article class="wide red"><div><small>Needs attention</small><strong>4</strong></div><p>Overdue loans waiting for a thoughtful follow-up.</p><a href="#circulation">Review the queue →</a></article></div></section>
+            <section class="story" id="circulation"><div class="story-title"><small>A living collection</small><h2>Every return changes what comes next.</h2><p>Circulation is not a report at the end of the day. It is the pulse that helps a collection become more useful.</p><a href="#queue">See circulation →</a></div><div class="story-cards"><article class="story-photo"><img src="https://picsum.photos/seed/library-stacks/1200/1500" alt="Tall library shelves"><div><small>Borrowed</small><strong>Knowledge travels further when it moves.</strong></div></article><article class="story-lime"><b>↔</b><strong>Issue, return, renew.</strong><p>One clear sequence for every desk interaction, with the rules enforced where they matter: on the server.</p></article><article class="story-paper" data-carousel><b>“</b><div data-slide>Our best recommendation is still the book a student did not know to ask for.<small>— The SmartLib recommendation layer</small></div><div data-slide hidden>A returned book is a new invitation, not a closed record.<small>— The SmartLib circulation desk</small></div><footer><span data-count>01 / 02</span><span><button data-prev type="button">←</button><button data-next type="button">→</button></span></footer></article></div></section>
+            <div class="marquee"><div>Catalog clarity <i></i> Secure circulation <i></i> Useful signals <i></i> Catalog clarity <i></i> Secure circulation <i></i> Useful signals <i></i></div></div>
+            <section class="queue" id="queue"><div class="section-head"><div><small>The latest movement</small><h2>Recent circulation</h2></div><a href="#queue">Open full history ↗</a></div><div class="table"><div class="row head"><span>Book</span><span>Member</span><span>Due</span><span>Status</span></div><div class="row"><strong>Clean Code</strong><span>Farhan Ahmed</span><span>2026-10-10</span><b>ISSUED</b></div><div class="row"><strong>Design Patterns</strong><span>Nadia Khan</span><span>2026-10-20</span><b>ISSUED</b></div><div class="row"><strong>Refactoring</strong><span>Aisha Rahman</span><span>2026-09-20</span><b class="late">OVERDUE</b></div></div></section>
+            <section class="catalog" id="catalog"><div class="section-head"><div><small>Vercel preview</small><h2>Find the next door.</h2></div><span>Functional backend runs as a Java container.</span></div><div class="books"><a href="#catalog"><span class="cover lime">01</span><strong>Effective Java</strong><small>Joshua Bloch · Programming</small></a><a href="#catalog"><span class="cover blue">02</span><strong>Clean Code</strong><small>Robert C. Martin · Programming</small></a><a href="#catalog"><span class="cover red">03</span><strong>Design Patterns</strong><small>Erich Gamma · Software Engineering</small></a></div></section>
+        </main>
+        <footer><strong>SmartLib</strong><span>Quiet infrastructure for active minds.</span><nav><a href="#catalog">Catalog</a><a href="#circulation">Circulation</a><a href="#overview">Preview home</a></nav></footer>
+    </div>
+</div>
+<div class="toast" role="status"></div>
+<script src="/preview.js"></script>
+</body>
+</html>

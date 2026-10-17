@@ -1,0 +1,30 @@
+<aside class="sidebar" th:fragment="sidebar(active)">
+    <a class="brand" th:href="@{/dashboard}" aria-label="SmartLib dashboard">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="brand-name">SmartLib</span>
+    </a>
+    <div class="sidebar-rule"></div>
+    <nav class="side-nav" aria-label="Primary navigation">
+        <a th:classappend="${active == 'dashboard' ? ' is-active' : ''}" th:href="@{/dashboard}">
+            <span class="nav-glyph glyph-grid" aria-hidden="true"></span><span>Overview</span>
+        </a>
+        <a th:classappend="${active == 'catalog' ? ' is-active' : ''}" th:href="@{/catalog}">
+            <span class="nav-glyph glyph-book" aria-hidden="true"></span><span>Catalog</span>
+        </a>
+        <a th:classappend="${active == 'circulation' ? ' is-active' : ''}" th:href="@{/circulation}">
+            <span class="nav-glyph glyph-arrows" aria-hidden="true"></span><span>Circulation</span>
+        </a>
+        <a th:classappend="${active == 'recommendations' ? ' is-active' : ''}" th:href="@{/recommendations}">
+            <span class="nav-glyph glyph-spark" aria-hidden="true"></span><span>Reading signals</span>
+        </a>
+        <a th:classappend="${active == 'fines' ? ' is-active' : ''}" th:href="@{/fines}">
+            <span class="nav-glyph glyph-arrows" aria-hidden="true"></span><span>Fine ledger</span>
+        </a>
+    </nav>
+    <div class="sidebar-spacer"></div>
+    <div class="sidebar-note">
+        <span class="live-dot" aria-hidden="true"></span>
+        <div><strong>Library network</strong><span>Operational and synced</span></div>
+    </div>
+    <div class="sidebar-footer">SmartLib workspace<br><span>Built for useful reading</span></div>
+</aside>

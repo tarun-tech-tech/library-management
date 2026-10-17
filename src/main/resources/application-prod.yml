@@ -1,0 +1,17 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+server:
+  servlet:
+    session:
+      cookie:
+        secure: true
+
+smartlib:
+  bootstrap:
+    admin-username: ${SMARTLIB_BOOTSTRAP_ADMIN_USERNAME:}
+    admin-password: ${SMARTLIB_BOOTSTRAP_ADMIN_PASSWORD:}
+    admin-email: ${SMARTLIB_BOOTSTRAP_ADMIN_EMAIL:}
+    admin-full-name: ${SMARTLIB_BOOTSTRAP_ADMIN_FULL_NAME:}

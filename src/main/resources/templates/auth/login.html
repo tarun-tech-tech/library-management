@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Sign in')}"></head>
+<body class="login-page">
+<main class="login-frame">
+    <section class="login-art" aria-label="SmartLib introduction">
+        <div class="login-art-image"></div>
+        <div class="login-art-wash"></div>
+        <a class="brand brand-on-dark" th:href="@{/login}">
+            <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+            <span class="brand-name">SmartLib</span>
+        </a>
+        <div class="login-quote">
+            <p>Good libraries make discovery feel inevitable.</p>
+            <span>One calm workspace for every shelf, member, and return.</span>
+        </div>
+        <div class="login-art-caption"><span>Smart collection / active circulation</span><span>Dhaka · 2026</span></div>
+    </section>
+    <section class="login-panel">
+        <div class="login-panel-inner">
+            <div class="eyebrow">Library intelligence workspace</div>
+            <h1>Make room for the next idea.</h1>
+            <p class="login-lead">Sign in to continue to the catalog, circulation desk, and your reading signals.</p>
+            <form class="login-form" id="login-form">
+                <label for="username">Username</label>
+                <input id="username" name="username" autocomplete="username" required placeholder="Your library username">
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" autocomplete="current-password" required placeholder="Your password">
+                <p class="form-message" id="login-message" role="alert"></p>
+                <button class="button button-primary button-wide" type="submit">Enter SmartLib <span aria-hidden="true">→</span></button>
+            </form>
+            <div class="login-note"><span class="lock-mark" aria-hidden="true"></span><span>Protected session. Your library data stays behind the desk.</span></div>
+        </div>
+        <div class="login-footer"><span>SmartLib / secure access</span><span>Java 21 · PostgreSQL</span></div>
+    </section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script th:src="@{/js/smartlib.js}"></script>
+</body>
+</html>

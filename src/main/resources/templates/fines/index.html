@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(${pageTitle})}"></head>
+<body class="app-body">
+<div class="app-shell">
+    <div th:replace="~{fragments/sidebar :: sidebar('fines')}"></div>
+    <div class="app-content">
+        <div th:replace="~{fragments/topbar :: topbar(null)}"></div>
+        <main class="app-main overflow-x-hidden">
+            <section class="page-intro reveal-section"><div class="eyebrow">Transparent, decimal-safe records</div><h1 class="page-title max-w-6xl">Keep the balance clear.</h1><p class="page-lead">Every fine has an assessed amount, a paid amount, and a remaining balance. Authorized staff can record offline payments without simulating a gateway.</p></section>
+            <section class="fine-section reveal-section"><div class="section-heading-row compact-heading"><div><div class="eyebrow">Account ledger</div><h2>Outstanding and settled</h2></div><span class="quiet-note" th:text="${#lists.size(fines) + ' records'}">0 records</span></div><div class="fine-grid" th:if="${!#lists.isEmpty(fines)}"><article class="fine-card" th:each="fine : ${fines}"><div class="fine-card-top"><span class="fine-id" th:text="${'FINE-' + fine.id}">FINE-01</span><span class="status" th:classappend="${fine.status.name() == 'PAID' ? ' status-live' : ' status-alert'}" th:text="${fine.status}">UNPAID</span></div><h3 th:text="${fine.memberName}">Member</h3><p th:text="${'Loan #' + fine.loanId + ' · ' + fine.daysOverdue + ' overdue days'}">Loan</p><div class="fine-amounts"><div><span>Assessed</span><strong th:text="${'৳ ' + fine.amount}">৳ 0.00</strong></div><div><span>Paid</span><strong th:text="${'৳ ' + fine.amountPaid}">৳ 0.00</strong></div><div><span>Balance</span><strong th:text="${'৳ ' + fine.balance}">৳ 0.00</strong></div></div><form class="payment-form" th:if="${canRecordPayment and fine.status.name() != 'PAID'}" th:attr="data-fine-pay=${fine.id}"><label>Record offline payment</label><div class="payment-row"><input name="amount" type="number" min="0.01" step="0.01" th:max="${fine.balance}" placeholder="Amount" required><select name="paymentMethod" aria-label="Payment method"><option value="CASH">Cash</option><option value="CARD">Card</option><option value="BANK_TRANSFER">Bank transfer</option></select><button class="button button-dark" type="submit">Record <span aria-hidden="true">→</span></button></div><input name="referenceNumber" type="text" maxlength="120" placeholder="Optional reference number"><p class="form-message"></p></form><div class="paid-note" th:if="${fine.status.name() == 'PAID'}">Paid <span th:text="${fine.paidAt}">2026-01-01</span></div></article></div><div class="empty-panel" th:if="${#lists.isEmpty(fines)}"><div class="empty-orbit" aria-hidden="true"></div><h3>No fine records in view.</h3><p>When a returned book crosses its due date, its assessed balance will appear here.</p></div></section>
+        </main>
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </div>
+</div>
+<div class="toast" role="status" aria-live="polite"></div>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script th:src="@{/js/smartlib.js}"></script>
+</body>
+</html>

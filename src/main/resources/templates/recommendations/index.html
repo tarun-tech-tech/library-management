@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(${pageTitle})}"></head>
+<body class="app-body">
+<div class="app-shell">
+    <div th:replace="~{fragments/sidebar :: sidebar('recommendations')}"></div>
+    <div class="app-content">
+        <div th:replace="~{fragments/topbar :: topbar(null)}"></div>
+        <main class="app-main overflow-x-hidden">
+            <section class="page-intro recommendation-intro reveal-section"><div class="eyebrow">A small nudge, grounded in the catalog</div><h1 class="page-title max-w-6xl">Follow the thread.</h1><p class="page-lead">SmartLib looks at actual catalog records, availability, and a member's own history when it is available. No invented titles. No mystery stock.</p></section>
+            <section class="recommendation-section reveal-section"><div class="section-heading-row compact-heading"><div><div class="eyebrow">Your next shelf</div><h2>Reading signals</h2></div><span class="quiet-note" th:text="${#lists.size(recommendations) + ' available matches'}">0 available matches</span></div><div class="recommendation-grid" th:if="${!#lists.isEmpty(recommendations)}"><a class="recommendation-card card-hover" th:each="recommendation, stat : ${recommendations}" th:href="@{/catalog/{id}(id=${recommendation.bookId})}"><div class="recommendation-no" th:text="${'0' + (stat.index + 1)}">01</div><div><h3 th:text="${recommendation.title}">Title</h3><p th:text="${recommendation.author}">Author</p><span class="recommendation-reason" th:text="${recommendation.reason}">Available in the current catalog</span></div><div class="recommendation-arrow">↗</div></a></div><div class="empty-panel" th:if="${#lists.isEmpty(recommendations)}"><h3>There is not enough signal yet.</h3><p>Once the catalog has available records, SmartLib will surface a grounded set of places to begin.</p><a class="button button-dark" th:href="@{/catalog}">Browse the collection <span aria-hidden="true">→</span></a></div></section>
+            <section class="method-note reveal-section"><div class="method-note-mark" aria-hidden="true">R</div><div><div class="eyebrow">Recommendation method</div><h2>Useful without pretending.</h2><p>This reading layer is deterministic by design. It uses real catalog availability and optional member history, so every title shown here exists in the collection.</p></div></section>
+        </main>
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </div>
+</div>
+<div class="toast" role="status" aria-live="polite"></div>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script th:src="@{/js/smartlib.js}"></script>
+</body>
+</html>

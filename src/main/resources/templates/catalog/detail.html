@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(${pageTitle})}"></head>
+<body class="app-body">
+<div class="app-shell">
+    <div th:replace="~{fragments/sidebar :: sidebar('catalog')}"></div>
+    <div class="app-content">
+        <div th:replace="~{fragments/topbar :: topbar(null)}"></div>
+        <main class="app-main overflow-x-hidden">
+            <section class="detail-hero reveal-section">
+                <a class="back-link" th:href="@{/catalog}"><span aria-hidden="true">←</span> Back to catalog</a>
+                <div class="detail-grid">
+                    <div class="detail-art image-reveal"><img th:src="${'https://picsum.photos/seed/book-' + book.id + '/1000/1300'}" th:alt="${book.title}" loading="eager"><span class="detail-art-mark">SL</span></div>
+                    <div class="detail-copy">
+                        <div class="eyebrow" th:text="${book.category}">Category</div>
+                        <h1 class="page-title" th:text="${book.title}">Book title</h1>
+                        <p class="detail-author" th:text="${book.author}">Author</p>
+                        <p class="detail-description">A catalog record held by SmartLib. Use the copy table below to identify an available physical book before starting a circulation action.</p>
+                        <div class="detail-facts"><div><span>ISBN</span><strong th:text="${book.isbn}">ISBN</strong></div><div><span>Published</span><strong th:text="${book.publicationYear != null ? book.publicationYear : '—'}">2024</strong></div><div><span>Publisher</span><strong th:text="${book.publisher != null ? book.publisher : 'Not recorded'}">Publisher</strong></div></div>
+                        <div class="availability-line"><span class="status-dot" th:classappend="${book.availableCopies > 0 ? ' is-live' : ''}"></span><strong th:text="${book.availableCopies > 0 ? 'Available to issue' : 'Currently unavailable'}">Available to issue</strong><span th:text="${book.availableCopies + ' of ' + book.totalCopies + ' copies ready'}">0 of 0 copies ready</span></div>
+                    </div>
+                </div>
+            </section>
+            <section class="copy-section reveal-section" aria-labelledby="copy-heading">
+                <div class="section-heading-row compact-heading"><div><div class="eyebrow">Physical inventory</div><h2 id="copy-heading">Choose a copy.</h2></div><span class="quiet-note">Copy-level status is authoritative.</span></div>
+                <div class="copy-table">
+                    <div class="copy-row copy-head"><span>Inventory code</span><span>Acquired</span><span>Status</span><span>Action</span></div>
+                    <div class="copy-row" th:each="copy : ${copies}"><span class="copy-code" th:text="${copy.inventoryCode}">SL-123</span><span th:text="${copy.acquiredAt}">2026-01-01</span><span><span class="status" th:classappend="${copy.status.name() == 'AVAILABLE' ? ' status-live' : ' status-muted'}" th:text="${copy.status}">AVAILABLE</span></span><a class="text-link" th:if="${copy.status.name() == 'AVAILABLE'}" th:href="@{/circulation(copyId=${copy.id})}">Issue this copy <span aria-hidden="true">→</span></a><span class="quiet-note" th:unless="${copy.status.name() == 'AVAILABLE'}">In use</span></div>
+                    <div class="empty-state" th:if="${#lists.isEmpty(copies)}">No physical copies have been added to this title.</div>
+                </div>
+            </section>
+        </main>
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </div>
+</div>
+<div class="toast" role="status" aria-live="polite"></div>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script th:src="@{/js/smartlib.js}"></script>
+</body>
+</html>

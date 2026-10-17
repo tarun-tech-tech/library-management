@@ -1,0 +1,42 @@
+name: SmartLib CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Reject known secret patterns
+        shell: bash
+        run: |
+          if git grep -nE 'Varad@04024|password[[:space:]]*=[[:space:]]*admin123|120000:a1b2c3d4e5f6' -- ':!.github/workflows/ci.yml' ':!SMARTLIB_DESIGN_AND_STATUS.md'; then
+            echo 'Potential credential or default password found in tracked files.'
+            exit 1
+          fi
+
+      - name: Run tests and package
+        run: ./mvnw -B -ntp verify
+
+      - name: Validate Compose configuration
+        run: |
+          cp .env.example .env
+          docker compose config --quiet
+
+      - name: Build Docker image
+        run: docker build --tag smartlib:ci .

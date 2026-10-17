@@ -1,0 +1,18 @@
+<header class="topbar" th:fragment="topbar(currentUser)">
+    <button class="mobile-nav-toggle" type="button" aria-label="Open navigation" data-sidebar-toggle>
+        <span></span><span></span>
+    </button>
+    <div class="crumbs"><span>Workspace</span><span class="crumb-slash">/</span><strong th:text="${pageTitle}">Overview</strong></div>
+    <div class="topbar-actions">
+        <a class="topbar-search" th:href="@{/catalog}" aria-label="Search the catalog">
+            <span class="search-mark" aria-hidden="true"></span><span>Search the catalog</span><kbd>/</kbd>
+        </a>
+        <button class="icon-button" type="button" aria-label="View notifications" data-toast="Notifications are clear">
+            <span class="bell-mark" aria-hidden="true"></span><span class="notification-dot" aria-hidden="true"></span>
+        </button>
+        <div class="user-chip">
+            <span class="avatar" th:text="${currentUser != null ? #strings.substring(currentUser.fullName, 0, 1) : 'S'}">S</span>
+            <span class="user-chip-copy"><strong th:text="${currentUser != null ? currentUser.fullName : 'SmartLib'}">SmartLib</strong><span th:text="${currentUser != null ? currentUser.role : 'Workspace'}">Workspace</span></span>
+        </div>
+    </div>
+</header>

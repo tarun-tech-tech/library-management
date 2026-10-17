@@ -1,0 +1,61 @@
+spring:
+  application:
+    name: smartlib
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/smartlib}
+    username: ${DB_USERNAME:smartlib}
+    password: ${DB_PASSWORD:}
+    hikari:
+      maximum-pool-size: ${DB_POOL_SIZE:10}
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: never
+      cleanup-cron: "0 */15 * * * *"
+  mvc:
+    problemdetails:
+      enabled: true
+  jackson:
+    default-property-inclusion: non_null
+
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        secure: ${SESSION_COOKIE_SECURE:false}
+        same-site: lax
+      timeout: ${SESSION_TIMEOUT:30m}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+smartlib:
+  bootstrap:
+    admin-username: ${SMARTLIB_BOOTSTRAP_ADMIN_USERNAME:}
+    admin-password: ${SMARTLIB_BOOTSTRAP_ADMIN_PASSWORD:}
+    admin-email: ${SMARTLIB_BOOTSTRAP_ADMIN_EMAIL:}
+    admin-full-name: ${SMARTLIB_BOOTSTRAP_ADMIN_FULL_NAME:}
+  loans:
+    default-duration-days: ${SMARTLIB_LOAN_DEFAULT_DURATION_DAYS:14}
+    fine-per-day: ${SMARTLIB_FINE_PER_DAY:5.00}
+    max-renewals: ${SMARTLIB_MAX_RENEWALS:2}
