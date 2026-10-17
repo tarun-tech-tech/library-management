@@ -3,13 +3,13 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 https://maven.apache.org/xsd/settings-1.2.0.xsd">
     <mirrors>
-        <!-- Official Maven Central endpoint alias. Render's shared build IPs can
-             be rate-limited on repo.maven.apache.org, while repo1 remains the
-             same public Central repository. -->
+        <!-- Render's shared build IP is rate-limited on public Central endpoints.
+             Aliyun's HTTPS public mirror keeps the same Maven coordinates while
+             avoiding that shared-IP limit for this academic deployment. -->
         <mirror>
-            <id>central-repo1</id>
-            <name>Maven Central via repo1</name>
-            <url>https://repo1.maven.org/maven2</url>
+            <id>central-aliyun</id>
+            <name>Maven Central via Aliyun public mirror</name>
+            <url>https://maven.aliyun.com/repository/public</url>
             <mirrorOf>central</mirrorOf>
         </mirror>
     </mirrors>

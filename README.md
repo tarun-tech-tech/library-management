@@ -150,7 +150,7 @@ Paste the complete real Internal Database URL from Render into `DATABASE_URL`; d
 7. After the first successful login, remove the four `SMARTLIB_BOOTSTRAP_ADMIN_*` variables and redeploy. The created account remains in PostgreSQL.
 8. Test catalog search, issue, return, renewal, fine payment, and `/swagger-ui.html`.
 
-The Docker build uses the official Maven image, the official `repo1.maven.org` Central endpoint alias, and a single retrying dependency-resolution pass. This avoids downloading Maven through the wrapper during a Render build and backs off when a Maven Central endpoint temporarily returns HTTP 429.
+The Docker build uses the official Maven image, an HTTPS Maven Central public mirror, and a single retrying dependency-resolution pass. This avoids downloading Maven through the wrapper during a Render build and backs off when a public Maven endpoint temporarily returns HTTP 429.
 
 ### 2. Deploy the visual preview on Vercel
 
